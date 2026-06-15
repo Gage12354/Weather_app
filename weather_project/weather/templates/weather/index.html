@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'weather/styles.css' %}">
+</head>
+<body>
+<div class="page">
+
+    <h1>US Weather App</h1>
+
+    <form method="GET">
+        <div class="entry">
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" placeholder="ex. Chicago" required>
+        </div>
+        
+        <div class="entry">
+            <label for="state">State</label>
+            <input type="text" name="state" id="state" placeholder="ex. Illinois" required>
+        </div>
+
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if error %}
+        <div class="error">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+
+    {% if currentWeather %}
+        <div class="current_weather">
+            <h2>{{ city }}, {{ state }}</h2>
+            <h2>Today</h2>
+            <img src="{% static currentWeather.icon %}" alt="Weather icon">
+            <p>{{ currentWeather.temperature }} °F</p>
+            <p>{{ currentWeather.condition }}</p>
+        </div>
+    {% endif %}
+    
+    {% if forecast %}
+    <h2>5-Day Forecast</h2>
+    {% endif %}
+    
+    {% if forecast %}
+        <div class="forecast">
+            {% for day in forecast %}
+                <div class="day">
+                    <h2>{{ day.date }}</h2>
+                    <img src="{% static day.icon %}" alt="Weather icon">
+                    <p>High: {{ day.high }} °F</p>
+                    <p>Low: {{ day.low }} °F</p>
+                    <p>{{ day.condition }}</p>
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+    <footer>Icons by Icons8.</footer>
+</div>
+</body>
+</html>
